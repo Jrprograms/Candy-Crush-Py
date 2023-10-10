@@ -27,22 +27,19 @@ while running:
             else:
                 for doce in TELA.layout:
                     if(doce.obj.collidepoint(event.pos)):
-                        #print(doce)
                         doces = PLAYER.selecionarDoce(doce)
-                        
+
+                        #https://gist.github.com/ValmirNogFilho/945ce8f9ace05fe2aebdfef1f13bf45b
                         if doces:
                             doce1 = TELA.layout.index(doces[0])
                             doce2 = TELA.layout.index(doces[1])
+                            
                             #Trocando os doces
-                            TELA.layout[doce1].x,TELA.layout[doce2].x = TELA.layout[doce2].x,TELA.layout[doce1].x
-                            TELA.layout[doce1].y,TELA.layout[doce2].y = TELA.layout[doce2].y,TELA.layout[doce1].y
                             TELA.layout[doce1].coluna,TELA.layout[doce2].coluna = TELA.layout[doce2].coluna,TELA.layout[doce1].coluna
-                            TELA.layout[doce1].linha,TELA.layout[doce2].linha = TELA.layout[doce2].linha,TELA.layout[doce1].linha
-                            TELA.layout[doce1].obj = TELA.layout[doce2].obj
+                            TELA.layout[doce1].lihha,TELA.layout[doce2].linha = TELA.layout[doce2].linha,TELA.layout[doce1].linha
+                            
 
-                            TELA.layout[doce1] = doces[1]
-                            TELA.layout[doce2] = doces[0]
-
+                            
 
 
     TELA.tela.fill('white')

@@ -12,10 +12,15 @@ class Player():
         self.selecionado = []
 
     def selecionarDoce(self,doce):
+        # print(self.selecionado)
         self.selecionado.append(doce)
-        os.system('cls')
-        print(self.selecionado)
+
         if len(self.selecionado) == 2:
+            if self.selecionado[0] == doce:
+                self.selecionado = []
+                print('Igual')
+                return False
+
             doces = self.selecionado
             self.selecionado = []
             if doces[0].linha == doces[1].linha:
@@ -32,6 +37,7 @@ class Player():
             return False
         else:
             return False
+
                     
 
         

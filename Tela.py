@@ -28,14 +28,15 @@ class Tela():
         elif(self.index == 'game'):
             self.tela.blit(self.background,(0,0))
             for doce in self.layout:
-                doce.draw(self.tela)
+                imagem = doce.draw(self.tela)
+                self.tela.blit(imagem[0],imagem[1])
                 
 
     #Definir doces do layout
     def setDoces(self):
         for i in range(6):
             for j in range(6):
-                cor = random.randint(0,4)
+                cor = random.randint(0,1)
                 pontuacao = random.randint(2,5) * 10
                 doce = Doce(cor,pontuacao, i, j)
                 self.layout.append(doce)
