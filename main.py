@@ -36,7 +36,7 @@ while running:
                             
                             #Trocando os doces
                             TELA.layout[doce1].coluna,TELA.layout[doce2].coluna = TELA.layout[doce2].coluna,TELA.layout[doce1].coluna
-                            TELA.layout[doce1].lihha,TELA.layout[doce2].linha = TELA.layout[doce2].linha,TELA.layout[doce1].linha
+                            TELA.layout[doce1].linha,TELA.layout[doce2].linha = TELA.layout[doce2].linha,TELA.layout[doce1].linha
                             
 
                             
