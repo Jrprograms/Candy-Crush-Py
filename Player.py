@@ -15,7 +15,15 @@ class Player():
         # print(self.selecionado)
         self.selecionado.append(doce)
 
-        if len(self.selecionado) == 2:
+        if len(self.selecionado) == 1:
+            doce.addBorda(True)
+            print(doce)
+            pass
+    
+        elif len(self.selecionado) == 2:
+
+            self.selecionado[0].addBorda(False)
+
             if self.selecionado[0] == doce:
                 self.selecionado = []
                 print('Igual')
