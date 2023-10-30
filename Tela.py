@@ -37,7 +37,7 @@ class Tela():
         contadora = 0
         for i in range(6):
             for j in range(6):
-                tipo = random.randint(0,1)
+                tipo = random.randint(0,2)
                 pontuacao = random.randint(2,5) * 10
                 doce = Doce(tipo,pontuacao, i, j,contadora)
                 contadora += 1
@@ -58,20 +58,25 @@ class Tela():
 
         for i in range(6):
             posicoesLinha = self.verfiqSeq(linhas[i])
-            print(posicoesLinha)
-            # posicoesLinha = [1,3]
-            # posicoesColuna = self.verfiqSeq(colunas[i])
+            posicoesColuna = self.verfiqSeq(colunas[i])
+            if(posicoesLinha != -1):
+                for j in range(posicoesLinha[0],posicoesLinha[1] + 1):
+                    lista_Exclusao.append(j + (6 * i))
+            
+            if posicoesColuna != -1:
+                for j in range(posicoesColuna[0],posicoesColuna[1] + 1):
+                    lista_Exclusao.append((j * 6) + i)
 
-            for i in range(posicoesLinha[0],posicoesLinha[1] + 1):
-                print(i)
+        
+        print(lista_Exclusao)
 
             #Verificar Linha
             #[0,1,1,1,2,3] => [1,3] => 1,2,3 * i 
             #[0,1,2,2,2,4] => [2,4] => 2,3,4 + (6 * i)
 
             #verificar Coluna
-            #[0,1,1,1,2,3] => [1,3] => 1 + 6 * i
-            #[0,1,2,2,2,4] => 
+            #[0,1,1,1,2,3] => [1,3] => 1 * 6 + i
+            #[0,1,2,2,2,4] => [2,4] => 2 + 
 
     def verfiqSeq(self,linha):
         anterior = None
@@ -97,4 +102,4 @@ class Tela():
             pos_final = pos_inicial + contadora - 1
             return [pos_inicial - 1,pos_final - 1]
 
-        return [0,0]
+        return -1
