@@ -43,16 +43,20 @@ while running:
                             #Trocar os doces no layout
                             TELA.atualizarLayout(doce1,doce2)
 
+                            pontuacaoJogada = 0
                             for el in TELA.divdSeq(preView=True):
                                 if doce1 == el or doce2 == el:
                                     #Verificar sequencias na tela
-                                    TELA.divdSeq() 
-                            
-                            #Reverte a troca dos doces
-                            TELA.swap(doce1,doce2)
+                                    pontuacaoJogada = TELA.divdSeq(first=True) 
+                                    PLAYER.pontuacao += pontuacaoJogada
+                                    
+                            if pontuacaoJogada == 0:
+                                #Reverte a troca dos doces
+                                TELA.swap(doce1,doce2)
 
-                            #Reverte a troca dos doces no layout
-                            TELA.atualizarLayout(doce1,doce2)
+                                #Reverte a troca dos doces no layout
+                                TELA.atualizarLayout(doce1,doce2)
+
 
                            
                             

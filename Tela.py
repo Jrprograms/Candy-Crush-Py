@@ -11,6 +11,7 @@ class Tela():
         self.index = 'home'
         self.background = pg.image.load("Home.png")
         self.botaoHome = pg.Rect(145,463.5,200,55)
+        self.pontAcumulada = 0  #Guardar a pontuação gerada pela quebra da sequencia dos doces
 
     #Escrever texto na tela
     def setTxt(self,texto, pos):
@@ -20,6 +21,7 @@ class Tela():
         self.txt = txt.get_rect(topleft=pos)
         self.tela.blit(txt,pos)
 
+    #Desenhar cabeçalho na tela
     def header(self,pontos):
         pg.draw.rect(self.tela,(255,0,152),(0,0,500,60))
         self.setTxt(f"Pontos {pontos}", (205,25))
@@ -55,14 +57,18 @@ class Tela():
     def atualizarLayout(self,indexDoce1,indexDoce2):
         self.layout[indexDoce1],self.layout[indexDoce2] = self.layout[indexDoce2],self.layout[indexDoce1]
     
-
+    #Funcao para trocar dois doces
     def swap(self,doce1,doce2):
         self.layout[doce1].coluna,self.layout[doce2].coluna = self.layout[doce2].coluna,self.layout[doce1].coluna
         self.layout[doce1].linha,self.layout[doce2].linha = self.layout[doce2].linha,self.layout[doce1].linha
         self.layout[doce1].index ,self.layout[doce2].index = self.layout[doce2].index,self.layout[doce1].index
 
-    def divdSeq(self, preView = False):
+    #Dividir minha lista como uma matriz e verifica as sequencias
+    def divdSeq(self, preView = False, first= False):
         lista_Exclusao = []
+
+        if first:
+            self.pontAcumulada = 0
 
         #Dividir as colunas do layout
         linhas = [[],[],[],[],[],[]]
@@ -84,18 +90,25 @@ class Tela():
 
 
         if preView == True:
-            print(lista_Exclusao)
+            print(self.pontAcumulada)
             return lista_Exclusao
 
         if len(lista_Exclusao) > 0:
             print("Passou aqui")
             self.excluirDoces(lista_Exclusao)
             self.verificarLista()
+            
+
+        return self.pontAcumulada    
+        
+
 
     def excluirDoces(self,lista):
         for el in lista:
             self.layout[el].tipo = "fantasma"
+            self.pontAcumulada += self.layout[el].pontuacao
 
+    #Organiza os doces na tela novamente
     def verificarLista(self):
         for i in range(6):
             lista = []
@@ -125,7 +138,7 @@ class Tela():
                     alist[i],alist[i+1] = alist[i+1],alist[i]
                     #alist[i].y,alist[i+1].y = alist[i+1].y,alist[i].y
 
-
+    #Verificar as sequencias do layout
     def verfiqSeq(self,linha):
         anterior = None
         contadora = 1
@@ -150,3 +163,14 @@ class Tela():
             return [pos_inicial - 1,pos_final - 1]
 
         return -1
+
+    def retornarPontuacao(self,pontuacao):
+        print(pontuacao)
+
+# teste = Tela()
+# teste.setDoces()
+# pontos = teste.divdSeq(first=True)
+# print(pontos)
+# print("*" * 15)
+# pontos2 = teste.divdSeq(first=True)
+# print(pontos2)
