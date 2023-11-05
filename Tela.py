@@ -31,13 +31,17 @@ class Tela():
                 imagem = doce.draw(self.tela)
                 self.tela.blit(imagem[0],imagem[1])
                 
+    def novoDoce(self,i,j,index,tipo = "novo"):
+        if tipo == "novo": tipo = random.randint(1,5) 
+        pontuacao = random.randint(2,5) * 10
+        return Doce(tipo,pontuacao, i, j,index)
 
     #Definir doces do layout
     def setDoces(self):
         contadora = 0
         for i in range(6):
             for j in range(6):
-                tipo = random.randint(0,2)
+                tipo = random.randint(1,5)
                 pontuacao = random.randint(2,5) * 10
                 doce = Doce(tipo,pontuacao, i, j,contadora)
                 contadora += 1
@@ -46,6 +50,12 @@ class Tela():
     def atualizarLayout(self,indexDoce1,indexDoce2):
         self.layout[indexDoce1],self.layout[indexDoce2] = self.layout[indexDoce2],self.layout[indexDoce1]
     
+
+    def swap(self,doce1,doce2):
+        self.layout[doce1].coluna,self.layout[doce2].coluna = self.layout[doce2].coluna,self.layout[doce1].coluna
+        self.layout[doce1].linha,self.layout[doce2].linha = self.layout[doce2].linha,self.layout[doce1].linha
+        self.layout[doce1].index ,self.layout[doce2].index = self.layout[doce2].index,self.layout[doce1].index
+
     def divdSeq(self):
         lista_Exclusao = []
 
@@ -67,16 +77,47 @@ class Tela():
                 for j in range(posicoesColuna[0],posicoesColuna[1] + 1):
                     lista_Exclusao.append((j * 6) + i)
 
+        if len(lista_Exclusao) > 0:
+            print("Passou aqui")
+            self.excluirDoces(lista_Exclusao)
+            self.verificarLista()
+
+    def excluirDoces(self,lista):
+        for el in lista:
+            self.layout[el].tipo = "fantasma"
+
+    def verificarLista(self):
+        for i in range(6):
+            lista = []
+            for j in range(6):
+                doce = self.layout[j * 6 + i]
+                lista.append(doce)
+
+            self.bubbleSort(lista)  
+
+            #Aqui o x,y está calculado erradamente
+            for j in range(6):
+                if lista[j].tipo == "fantasma":
+                    lista[j] = self.novoDoce(j,i,lista[j].index)
+                else:
+                    lista[j] = self.novoDoce(j,i,lista[j].index,lista[j].tipo)
+
+            for j in range(6):
+                self.layout[j * 6 + i] = lista[j]
+
+        self.divdSeq()
+
+
+    def bubbleSort(self,alist):
+        for passnum in range(len(alist)-1,0,-1):
+            for i in range(passnum):
+                if alist[i+1].tipo == "fantasma":
+                    alist[i],alist[i+1] = alist[i+1],alist[i]
+                    #alist[i].y,alist[i+1].y = alist[i+1].y,alist[i].y
+
+    def reporDoces(self):
+        pass
         
-        print(lista_Exclusao)
-
-            #Verificar Linha
-            #[0,1,1,1,2,3] => [1,3] => 1,2,3 * i 
-            #[0,1,2,2,2,4] => [2,4] => 2,3,4 + (6 * i)
-
-            #verificar Coluna
-            #[0,1,1,1,2,3] => [1,3] => 1 * 6 + i
-            #[0,1,2,2,2,4] => [2,4] => 2 + 
 
     def verfiqSeq(self,linha):
         anterior = None
@@ -85,7 +126,6 @@ class Tela():
         pos_final = 0
 
         for index,doce in enumerate(linha):
-            print(doce)
             if contadora == 1:
                 pos_inicial = index
             if doce.tipo == anterior:

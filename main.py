@@ -11,7 +11,6 @@ TELA = Tela.Tela()
 GAME = Game.Game()
 
 running = True
-TELA.divdSeq()
 while running:
     #Leitor de Eventos
     for event in pg.event.get():
@@ -24,6 +23,7 @@ while running:
                     TELA.background = pg.image.load("Game.png")
                     TELA.index = 'game'
                     TELA.setDoces()
+                    TELA.divdSeq()
             else:
                 print(event.pos)
                 for doce in TELA.layout:
@@ -37,10 +37,9 @@ while running:
                             doce2 = TELA.layout.index(doces[1])
                             
                             #Trocando os doces
-                            TELA.layout[doce1].coluna,TELA.layout[doce2].coluna = TELA.layout[doce2].coluna,TELA.layout[doce1].coluna
-                            TELA.layout[doce1].linha,TELA.layout[doce2].linha = TELA.layout[doce2].linha,TELA.layout[doce1].linha
-                            TELA.layout[doce1].index ,TELA.layout[doce2].index = TELA.layout[doce2].index,TELA.layout[doce1].index
+                            TELA.swap(doce1,doce2)
 
+                            #Trocar os doces no layout
                             TELA.atualizarLayout(doce1,doce2)
 
                             #Verificar sequencias na tela
@@ -55,4 +54,3 @@ while running:
     pg.display.flip()
 
 pg.quit()
-

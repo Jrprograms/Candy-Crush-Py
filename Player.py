@@ -1,8 +1,9 @@
 import pygame as pg
 import os
 
+
 class Player():
-    def __init__(self,nome = "Anonymous"):
+    def __init__(self, nome="Anonymous"):
         self.nome = nome
         self.historico = {
             "vitorias": [],
@@ -11,7 +12,7 @@ class Player():
         self.pontuacao = 0
         self.selecionado = []
 
-    def selecionarDoce(self,doce):
+    def selecionarDoce(self, doce):
         # print(self.selecionado)
         self.selecionado.append(doce)
 
@@ -19,7 +20,7 @@ class Player():
             doce.addBorda(True)
             print(doce)
             pass
-    
+
         elif len(self.selecionado) == 2:
 
             self.selecionado[0].addBorda(False)
@@ -40,16 +41,8 @@ class Player():
                 if doces[0].linha == doces[1].linha + 1 or doces[0].linha == doces[1].linha - 1:
                     print('Pode trocar')
                     return doces
-                
+
             self.selecionado = []
             return False
         else:
             return False
-
-                    
-
-        
-
-        
-            
-            

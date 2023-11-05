@@ -16,20 +16,11 @@ class Doce():
         self.setTipo()
 
     def __repr__(self) -> str:
-        return f"<tipo:{self.tipo}, pont:{self.pontuacao}, linha:{self.linha}, coluna:{self.coluna}>\n"
+        return f"<tipo:{self.tipo}, pont:{self.pontuacao}, linha:{self.linha}, coluna:{self.coluna}, index:{self.index}, x:{self.x}, y:{self.y}>\n"
     
     #Definir cor do doce
     def setTipo(self):
-        imagens = {
-            0 : "src/1.png",
-            1 : "src/2.png",
-            2 : "src/3.png",
-            3 : (150,150,0),
-            4 : (255,0,255)
-        }
-        for imagem in imagens:
-            if imagem == self.imagem:
-                self.imagem = pg.image.load(imagens[imagem])
+        self.imagem = pg.image.load(f"src/{self.tipo}.png")
 
     #desenhar o doce na tela
     def draw(self,tela):
@@ -37,6 +28,7 @@ class Doce():
         self.x = (50 * (self.coluna + 1)) + 45
         self.y = 35 * (self.linha + 1 )
         self.obj = pg.Rect((self.x,self.y,30,30))
+        self.imagem = pg.image.load(f"src/{self.tipo}.png")
         # pg.draw.rect(tela,self.cor,(self.x,self.y,30,30))
         return [self.imagem,(self.x,self.y)]
     
