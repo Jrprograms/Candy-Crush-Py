@@ -13,27 +13,32 @@ class Tela():
         self.botaoHome = pg.Rect(145,463.5,200,55)
 
     #Escrever texto na tela
-    def setTxt(self,texto):
+    def setTxt(self,texto, pos):
         font = pg.font.get_default_font()
         fontesys = pg.font.SysFont(font, 20)    
         txt = fontesys.render(texto, 1, (255,255,255))
-        self.txt = txt.get_rect(topleft=(235,493.5))
-        self.tela.blit(txt,(235,493.5))
+        self.txt = txt.get_rect(topleft=pos)
+        self.tela.blit(txt,pos)
 
-    def desenharTela(self):
+    def header(self,pontos):
+        pg.draw.rect(self.tela,(255,0,152),(0,0,500,60))
+        self.setTxt(f"Pontos {pontos}", (205,25))
+
+    def desenharTela(self,pontos = 0):
         if(self.index == 'home'):
             self.tela.blit(self.background,(0,0))
-            self.setTxt("PLAY")
+            self.setTxt("PLAY",(235,493.5))
             
         elif(self.index == 'game'):
             self.tela.blit(self.background,(0,0))
+            self.header(pontos)
             for doce in self.layout:
                 imagem = doce.draw(self.tela)
                 self.tela.blit(imagem[0],imagem[1])
                 
     def novoDoce(self,i,j,index,tipo = "novo"):
         if tipo == "novo": tipo = random.randint(1,5) 
-        pontuacao = random.randint(2,5) * 10
+        pontuacao = tipo * 10
         return Doce(tipo,pontuacao, i, j,index)
 
     #Definir doces do layout
@@ -42,7 +47,7 @@ class Tela():
         for i in range(6):
             for j in range(6):
                 tipo = random.randint(1,5)
-                pontuacao = random.randint(2,5) * 10
+                pontuacao = tipo * 10
                 doce = Doce(tipo,pontuacao, i, j,contadora)
                 contadora += 1
                 self.layout.append(doce)
@@ -56,7 +61,7 @@ class Tela():
         self.layout[doce1].linha,self.layout[doce2].linha = self.layout[doce2].linha,self.layout[doce1].linha
         self.layout[doce1].index ,self.layout[doce2].index = self.layout[doce2].index,self.layout[doce1].index
 
-    def divdSeq(self):
+    def divdSeq(self, preView = False):
         lista_Exclusao = []
 
         #Dividir as colunas do layout
@@ -76,6 +81,11 @@ class Tela():
             if posicoesColuna != -1:
                 for j in range(posicoesColuna[0],posicoesColuna[1] + 1):
                     lista_Exclusao.append((j * 6) + i)
+
+
+        if preView == True:
+            print(lista_Exclusao)
+            return lista_Exclusao
 
         if len(lista_Exclusao) > 0:
             print("Passou aqui")
@@ -115,9 +125,6 @@ class Tela():
                     alist[i],alist[i+1] = alist[i+1],alist[i]
                     #alist[i].y,alist[i+1].y = alist[i+1].y,alist[i].y
 
-    def reporDoces(self):
-        pass
-        
 
     def verfiqSeq(self,linha):
         anterior = None

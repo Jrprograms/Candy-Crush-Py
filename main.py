@@ -36,19 +36,30 @@ while running:
                             doce1 = TELA.layout.index(doces[0])
                             doce2 = TELA.layout.index(doces[1])
                             
+
                             #Trocando os doces
                             TELA.swap(doce1,doce2)
 
                             #Trocar os doces no layout
                             TELA.atualizarLayout(doce1,doce2)
 
-                            #Verificar sequencias na tela
-                            TELA.divdSeq()                            
+                            for el in TELA.divdSeq(preView=True):
+                                if doce1 == el or doce2 == el:
+                                    #Verificar sequencias na tela
+                                    TELA.divdSeq() 
+                            
+                            #Reverte a troca dos doces
+                            TELA.swap(doce1,doce2)
+
+                            #Reverte a troca dos doces no layout
+                            TELA.atualizarLayout(doce1,doce2)
+
+                           
                             
 
 
     TELA.tela.fill('white')
-    TELA.desenharTela()
+    TELA.desenharTela(PLAYER.pontuacao)
 
     #Funcionalidades
     pg.display.flip()

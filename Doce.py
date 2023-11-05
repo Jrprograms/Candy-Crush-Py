@@ -7,8 +7,8 @@ class Doce():
         self.linha = l
         self.coluna = c
         self.index = index
-        self.x = (50 * (self.coluna + 1)) + 45
-        self.y = 35 * (self.linha + 1 )
+        self.x = (50 * (self.coluna + 1)) + 50
+        self.y = 35 * (self.linha + 1 ) + 100
         self.obj = pg.Rect((self.x,self.y,30,30))
         self.imagem = tipo
         self.borda = False
@@ -25,8 +25,8 @@ class Doce():
     #desenhar o doce na tela
     def draw(self,tela):
         self.drawBorda(tela)
-        self.x = (50 * (self.coluna + 1)) + 45
-        self.y = 35 * (self.linha + 1 )
+        self.x = (50 * (self.coluna + 1)) + 50
+        self.y = 35 * (self.linha + 1 ) + 100
         self.obj = pg.Rect((self.x,self.y,30,30))
         self.imagem = pg.image.load(f"src/{self.tipo}.png")
         # pg.draw.rect(tela,self.cor,(self.x,self.y,30,30))
