@@ -1,5 +1,7 @@
 import pygame as pg
 
+TAMANHO_IMG = 50
+
 class Doce():
     def __init__(self,tipo,pts,l,c,index):
         self.tipo = tipo  
@@ -7,28 +9,30 @@ class Doce():
         self.linha = l
         self.coluna = c
         self.index = index
-        self.x = (50 * (self.coluna + 1)) + 50
-        self.y = 35 * (self.linha + 1 ) + 100
-        self.obj = pg.Rect((self.x,self.y,30,30))
+        self.x = (60 * (self.coluna + 1)) + 15
+        self.y = 55 * (self.linha + 1 ) + 85
+        self.obj = pg.Rect((self.x,self.y,TAMANHO_IMG,TAMANHO_IMG))
         self.imagem = tipo
         self.borda = False
 
         self.setTipo()
 
     def __repr__(self) -> str:
-        return f"<tipo:{self.tipo}, pont:{self.pontuacao}, linha:{self.linha}, coluna:{self.coluna}, index:{self.index}, x:{self.x}, y:{self.y}>\n"
+        return f"[{self.tipo},{self.pontuacao},{self.linha},{self.coluna},{self.index}]"
     
     #Definir cor do doce
     def setTipo(self):
-        self.imagem = pg.image.load(f"src/{self.tipo}.png")
+        self.imagem = pg.image.load(f"src/D{self.tipo}.png")
+        self.imagem =  pg.transform.scale(self.imagem, (TAMANHO_IMG, TAMANHO_IMG))
 
     #desenhar o doce na tela
     def draw(self,tela):
         self.drawBorda(tela)
-        self.x = (50 * (self.coluna + 1)) + 50
-        self.y = 35 * (self.linha + 1 ) + 100
-        self.obj = pg.Rect((self.x,self.y,30,30))
-        self.imagem = pg.image.load(f"src/{self.tipo}.png")
+        self.x = (60 * (self.coluna + 1)) + 15
+        self.y = 55 * (self.linha + 1 ) + 85
+        self.obj = pg.Rect((self.x,self.y,TAMANHO_IMG,TAMANHO_IMG))
+        self.imagem = pg.image.load(f"src/D{self.tipo}.png")
+        self.imagem =  pg.transform.scale(self.imagem, (TAMANHO_IMG, TAMANHO_IMG))
         # pg.draw.rect(tela,self.cor,(self.x,self.y,30,30))
         return [self.imagem,(self.x,self.y)]
     

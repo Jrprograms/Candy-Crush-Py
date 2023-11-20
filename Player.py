@@ -5,12 +5,15 @@ import os
 class Player():
     def __init__(self, nome="Anonymous"):
         self.nome = nome
-        self.historico = {
-            "vitorias": [],
-            "derrotas": []
-        }
+        self.historico = [] #Antigas Pontuações
         self.pontuacao = 0
+        self.bonus = 0 #Bonus de power-up
+        self.powerup = 0
+        self.estadoLayout = []
         self.selecionado = []
+
+    def __repr__(self) -> str:
+        return f"Nome:{self.nome}, Historico:{self.historico}, pont:{self.pontuacao}, estado:{self.estadoLayout}"
 
     def selecionarDoce(self, doce):
         # print(self.selecionado)
@@ -34,12 +37,10 @@ class Player():
             self.selecionado = []
             if doces[0].linha == doces[1].linha:
                 if doces[0].coluna == doces[1].coluna + 1 or doces[0].coluna == doces[1].coluna - 1:
-                    print('Pode trocar 1')
                     return doces
 
             elif doces[0].coluna == doces[1].coluna:
                 if doces[0].linha == doces[1].linha + 1 or doces[0].linha == doces[1].linha - 1:
-                    print('Pode trocar')
                     return doces
 
             self.selecionado = []

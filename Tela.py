@@ -44,15 +44,21 @@ class Tela():
         return Doce(tipo,pontuacao, i, j,index)
 
     #Definir doces do layout
-    def setDoces(self):
+    def setDoces(self,ESTADO = None):
         contadora = 0
-        for i in range(6):
-            for j in range(6):
-                tipo = random.randint(1,5)
-                pontuacao = tipo * 10
-                doce = Doce(tipo,pontuacao, i, j,contadora)
-                contadora += 1
-                self.layout.append(doce)
+        if ESTADO == None:
+            for i in range(6):
+                for j in range(6):
+                    tipo = random.randint(1,5)
+                    pontuacao = tipo * 10
+                    doce = Doce(tipo,pontuacao, i, j,contadora)
+                    contadora += 1
+                    self.layout.append(doce)
+        else:
+            for index,doce in enumerate(ESTADO):
+                t,l,c = doce
+                self.layout.append(Doce(t,t * 10,l,c,index))
+
 
     def atualizarLayout(self,indexDoce1,indexDoce2):
         self.layout[indexDoce1],self.layout[indexDoce2] = self.layout[indexDoce2],self.layout[indexDoce1]

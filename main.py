@@ -22,8 +22,13 @@ while running:
                     TELA.botaoHome = None
                     TELA.background = pg.image.load("Game.png")
                     TELA.index = 'game'
-                    TELA.setDoces()
-                    TELA.divdSeq()
+                    EstadoSalvo = GAME.carregarEstado(PLAYER)
+                    if(EstadoSalvo):
+                        # print(PLAYER.estadoLayout)
+                        TELA.setDoces(PLAYER.estadoLayout)
+                    else:
+                        TELA.setDoces()
+                        TELA.divdSeq()
             else:
                 print(event.pos)
                 for doce in TELA.layout:
@@ -56,6 +61,14 @@ while running:
 
                                 #Reverte a troca dos doces no layout
                                 TELA.atualizarLayout(doce1,doce2)
+                            else:
+                                if(PLAYER.pontuacao + 1000 >= PLAYER.bonus):
+                                    PLAYER.powerup += 1
+                                    PLAYER.bonus += 1000
+
+                            if(TELA.divdSeq(preView=True) == 0):
+                                GAME.gameOver(TELA)
+
 
 
                            
@@ -68,4 +81,6 @@ while running:
     #Funcionalidades
     pg.display.flip()
 
+
+GAME.salvarEstado(PLAYER,TELA)
 pg.quit()
