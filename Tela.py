@@ -70,7 +70,7 @@ class Tela():
         self.layout[doce1].index ,self.layout[doce2].index = self.layout[doce2].index,self.layout[doce1].index
 
     #Dividir minha lista como uma matriz e verifica as sequencias
-    def divdSeq(self, preView = False, first= False):
+    def divdSeq(self, preView = False, first= False, dica=False):
         lista_Exclusao = []
 
         if first:
@@ -79,9 +79,13 @@ class Tela():
         #Dividir as colunas do layout
         linhas = [[],[],[],[],[],[]]
         colunas = [[],[],[],[],[],[]]
+
         for doce in self.layout:
             linhas[doce.linha].append(doce)
             colunas[doce.coluna].append(doce)
+
+        if dica:
+            return linhas,colunas
 
         for i in range(6):
             posicoesLinha = self.verfiqSeq(linhas[i])
@@ -96,7 +100,6 @@ class Tela():
 
 
         if preView == True:
-            print(self.pontAcumulada)
             return lista_Exclusao
 
         if len(lista_Exclusao) > 0:
@@ -108,7 +111,7 @@ class Tela():
         return self.pontAcumulada    
         
 
-
+    #Tranforma os doces em fantasmas para poderem ser trocados
     def excluirDoces(self,lista):
         for el in lista:
             self.layout[el].tipo = "fantasma"
@@ -122,9 +125,10 @@ class Tela():
                 doce = self.layout[j * 6 + i]
                 lista.append(doce)
 
+            #Organizar os doces fantamas para o inicio da coluna descendo os doces do topo da coluna
             self.bubbleSort(lista)  
 
-            #Aqui o x,y está calculado erradamente
+            #Gerando um novo doce no lugar dos doces fantasmas ou recriando o doce que desceu para atualizar suas informações
             for j in range(6):
                 if lista[j].tipo == "fantasma":
                     lista[j] = self.novoDoce(j,i,lista[j].index)
@@ -170,13 +174,52 @@ class Tela():
 
         return -1
 
-    def retornarPontuacao(self,pontuacao):
-        print(pontuacao)
+    def mostrarDoces(self):
+       contador = 0
+       for el in self.layout:
+           print(el.tipo,end='-')
+           contador += 1
+           if contador == 6:
+               contador = 0
+               print("\n")
 
-# teste = Tela()
-# teste.setDoces()
-# pontos = teste.divdSeq(first=True)
-# print(pontos)
-# print("*" * 15)
-# pontos2 = teste.divdSeq(first=True)
-# print(pontos2)
+    def mostrarDica(self):
+        linhas, colunas = self.divdSeq(dica=True)
+        dicas = []
+
+        print("Mostrar Dica()")
+
+        for linha in linhas:
+            seq = []
+            anterior = None
+
+            for index,doce in enumerate(linha):
+
+                if len(seq) == 0:
+                    anterior = doce
+                    seq.append(doce)
+                elif doce.tipo == anterior.tipo:
+                    seq = []
+                    seq.append(doce)
+                    anterior = doce
+                else:
+                    if len(seq) == 2 and index < 5:
+                        if(linha[index+1].tipo == anterior.tipo):
+                            print("Dica na linha1",linha)
+                            linha[index + 1].mostrarDica()
+                            anterior.mostrarDica()
+                            break
+                        else:
+                            seq = []
+                            anterior = doce
+                    elif index < 4:
+                        if(linha[index + 1].tipo == anterior.tipo == linha[index + 2].tipo):
+                            print("Dica na linha2",linha)
+                            linha[index + 1].mostrarDica()
+                            anterior.mostrarDica()
+                            break
+                        else:
+                            seq = []
+                            anterior = doce
+                    else:
+                        anterior = doce

@@ -10,8 +10,14 @@ PLAYER = Player.Player()
 TELA = Tela.Tela()
 GAME = Game.Game()
 
+timer = 0
+clock = pg.time.Clock()
+
 running = True
 while running:
+
+    timer += 20/450 #Adicionar um "segundo" se baseando na velocidade de fps
+
     #Leitor de Eventos
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -70,16 +76,18 @@ while running:
                                 GAME.gameOver(TELA)
 
 
-
-                           
+    if timer >= 8:
+        TELA.mostrarDica()
+        timer = 0         
                             
-
 
     TELA.tela.fill('white')
     TELA.desenharTela(PLAYER.pontuacao)
 
     #Funcionalidades
     pg.display.flip()
+
+    clock.tick(20)
 
 
 GAME.salvarEstado(PLAYER,TELA)
